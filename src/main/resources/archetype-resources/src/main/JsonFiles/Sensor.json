@@ -1,0 +1,24 @@
+{  
+   "@context":"http://vital-iot.org/contexts/sensor.jsonld",
+   "id":"http://www.example.com/vital/sensor/123",
+   "type":"VitalSensor",
+   "name":"TemperatureSensor No.123",
+   "description":"This is an example sensor",
+   "status":"vital:Running",
+   "hasLastKnownLocation":{  
+      "type":"geo:Point",
+      "geo:lat":53.2719,
+      "geo:long":-9.0489
+   },
+   "ssn:observes":[  
+      {  
+         "type":"vital:Light",
+         "id":"http://www.example.com/vital/sensor/123/light"
+      },
+      {  
+         "type":"openiot:Temperature",
+         "id":"http://www.example.com/vital/sensor/123/temperature"
+      }
+   ],
+   "status": "vital:Running"
+}

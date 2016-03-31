@@ -1,0 +1,13 @@
+{
+  "id":
+  [
+    "http://www.example.com/ico/123/",
+    "http://www.example.com/ico/1234/",
+    "http://www.example.com/ico/12345/"
+  ],
+  "type":
+  [
+    "http://vital-iot.eu/ontology/ns/VitalSensor",
+    "http://vital-iot.eu/ontology/ns/MonitoringSensor"
+  ]
+}

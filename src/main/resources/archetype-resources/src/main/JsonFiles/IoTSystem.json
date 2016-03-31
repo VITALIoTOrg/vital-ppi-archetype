@@ -1,0 +1,27 @@
+{
+  "@context": "http://vital2.cloud.reply.eu:8080/contexts/system.jsonld",
+  "id": "http://www.reply.com/camden",
+  "type": "vital:VitalSystem",
+  "name": "Camden Reply System",
+  "description": "This is a deployment of Reply H1 in Camden.",
+  "operator": "http://www.ctu.com/",
+  "serviceArea": "http://dbpedia.org/page/Camden_Town",
+  "sensors":
+  [
+    "http://example.com/sensor/1",
+    "http://example.com/sensor/2"
+  ],
+  "services":
+  [
+    "http://example.com/service/1",
+    "http://example.com/service/2",
+    "http://example.com/service/3"
+  ],
+  "systems":
+  [
+    "http://example.com/system/1",
+    "http://example.com/system/2",
+    "http://example.com/system/3"
+  ],
+  "status": "vital:Running"
+}

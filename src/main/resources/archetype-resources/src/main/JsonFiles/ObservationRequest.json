@@ -1,0 +1,9 @@
+{
+  "sensor": 
+  [
+    "http://example.com/sensor/2"
+  ],
+  "property": " http://lsm.deri.ie/OpenIot/Temperature",
+  "from": "2014-11-17T09:00:00+02:00",
+  "to": "2014-11-17T11:00:00+02:00"
+}

@@ -1,0 +1,13 @@
+{
+   "@context": "http://vital-iot.eu/contexts/service.jsonld",
+   "id": "http://example.com/service/3",
+   "type": "vital:ObservationService",
+   "operations":
+   [
+      {
+         "type": "vital:GetObservations",
+         "hrest:hasAddress": "http://example.com/sensor/observation",
+         "hrest:hasMethod": "hrest:POST"
+      }
+   ]
+}

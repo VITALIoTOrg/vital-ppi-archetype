@@ -1,0 +1,34 @@
+<archetype xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype/1.0.0 http://maven.apache.org/xsd/archetype-1.0.0.xsd">
+    <id>vital-ppi-archetype</id>
+    <sources>
+        <source>src/main/java/eu/vital/ppi/clients/IoTSystemClient.java</source>
+        <source>src/main/java/eu/vital/ppi/services/PPI.java</source>
+        <source>src/main/java/eu/vital/ppi/utils/EventHelper.java</source>
+        <source>src/main/java/eu/vital/ppi/utils/HttpCommonClient.java</source>
+        <source>src/main/java/eu/vital/ppi/utils/JsonUtils.java</source>
+        <source>src/main/java/eu/vital/ppi/utils/RequestEvent.java</source>
+        <source>src/main/java/eu/vital/ppi/utils/ServedEvent.java</source>
+        <source>src/main/java/eu/vital/ppi/utils/StatCounter.java</source>
+        <source>src/main/java/eu/vital/ppi/utils/ThrowableExceptionMapper.java</source>
+    </sources>
+    <resources>
+        <resource>src/main/resources/log4j2.xml</resource>
+        <resource>src/main/JsonFiles/CityBikesNetwork.json</resource>
+        <resource>src/main/JsonFiles/IoTSystem.json</resource>
+        <resource>src/main/JsonFiles/PerformanceMetric.json</resource>
+        <resource>src/main/JsonFiles/Service.json</resource>
+        <resource>src/main/JsonFiles/CityBikesNetworks.json</resource>
+        <resource>src/main/JsonFiles/Measure.json</resource>
+        <resource>src/main/JsonFiles/PerformanceMetricsMetadata.json</resource>
+        <resource>src/main/JsonFiles/EmptyRequest.json</resource>
+        <resource>src/main/JsonFiles/MetricRequest.json</resource>
+        <resource>src/main/JsonFiles/Sensor.json</resource>
+        <resource>src/main/JsonFiles/IdTypeRequest.json</resource>
+        <resource>src/main/JsonFiles/ObservationRequest.json</resource>
+        <resource>src/main/JsonFiles/SensorStatus.json</resource>
+        <resource>src/main/webapp/index.html</resource>
+        <resource>src/main/webapp/WEB-INF/faces-config.xml</resource>
+        <resource>src/main/webapp/WEB-INF/web.xml</resource>
+    </resources>
+</archetype>
+

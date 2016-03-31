@@ -1,0 +1,32 @@
+{
+   "@context":"http://vital-iot.org/contexts/measurement.jsonld",
+   "id":"http://www.example.com/vital/sensor/123/observation/1",
+   "type":"ssn:Observation",
+   "ssn:observedBy": "http://example.com/sensor/123",
+   "ssn:observationProperty":{
+      "type":"http://lsm.deri.ie/OpenIoT/Temperature"
+   },
+   "ssn:observationResultTime":{
+      "time:inXSDDateTime":"2014-08-20T16:47:32+01:00"
+   },
+   "dul:hasLocation":{
+      "type":"geo:Point",
+      "geo:lat":55.701,
+      "geo:long":12.552,
+      "geo:alt":4.33
+   },
+   "ssn:observationQuality":{
+      "ssn:hasMeasurementProperty":{
+         "type":"Reliability",
+         "hasValue":"HighReliability"
+      }
+   },
+   "ssn:observationResult":{
+      "type":"ssn:SensorOutput",
+      "ssn:hasValue":{
+         "type":"ssn:ObservationValue",
+         "value":"vital:Running",
+         "qudt:unit":"qudt:DegreeCelsius"
+      }
+   }
+}
