@@ -111,6 +111,7 @@ public class PPI {
 
         services = new ArrayList<String>();
         sensors = new ArrayList<String>();
+        iotSystem = new IoTSystem();
 
         // Fill in the iotSystem properties (with data from the "client" when needed)
         iotSystem.setContext("http://vital-iot.eu/contexts/system.jsonld");
@@ -479,7 +480,7 @@ public class PPI {
         try {
         	sensorRequest = (IdTypeRequest) JsonUtils.deserializeJson(bodyRequest, IdTypeRequest.class);
         } catch (IOException e) {
-        	logger.error("[/" + path + "/sensor/status] Error parsing request");
+        	logger.error("[/sensor/status] Error parsing request");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
@@ -598,13 +599,13 @@ public class PPI {
                 	unit = "qudt:Number";
                 	value = Integer.toString(StatCounter.getPendingRequest() - 1);
                 } else {
-                	logger.error("[/" + path + "/sensor/observation] Bad metric " + observationRequest.getProperty());
+                	logger.error("[/sensor/observation] Bad metric " + observationRequest.getProperty());
                     return Response.status(Response.Status.BAD_REQUEST).build();
                 }
 
                 metric = new PerformanceMetric();
                 metric.setContext("http://vital-iot.eu/contexts/measurement.jsonld");
-                metric.setId(uri.getBaseUri() "/sensor/monitoring/observation/" + Long.toHexString(date.getTime()));
+                metric.setId(uri.getBaseUri() + "/sensor/monitoring/observation/" + Long.toHexString(date.getTime()));
                 metric.setType("ssn:Observation");
 
                 SsnObservationProperty_ ssnObservationProperty_ = new SsnObservationProperty_();
@@ -624,7 +625,7 @@ public class PPI {
                 ssnObservationResult_.setSsnHasValue(ssnHasValue_);
                 metric.setSsnObservationResult(ssnObservationResult_);
 
-                metric.setSsnFeatureOfInterest(uri.getBaseUri() + path);
+                metric.setSsnFeatureOfInterest(uri.getBaseUri().toString());
                 metrics.add(metric);
 
                 try {

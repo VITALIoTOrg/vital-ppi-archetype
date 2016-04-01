@@ -97,17 +97,17 @@
                 <artifactId>jsonschema2pojo-maven-plugin</artifactId>
                 <version>0.4.18</version>
                 <configuration>
-                    <sourceDirectory>${basedir}/src/main/JsonFiles</sourceDirectory>
+                    <sourceDirectory>${project.basedir}/src/main/JsonFiles</sourceDirectory>
                     <useCommonsLang3>true</useCommonsLang3>
                     <targetVersion>1.8</targetVersion>
                     <includeDynamicAccessors>false</includeDynamicAccessors>
                     <generateBuilders>true</generateBuilders>
                     <includeHashcodeAndEquals>true</includeHashcodeAndEquals>
-                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                     <sourceType>json</sourceType>
                     <includeJsr303Annotations>true</includeJsr303Annotations>
                     <annotationStyle>jackson2</annotationStyle>
-                    <targetPackage>eu.vital.reply.jsonpojos</targetPackage>
+                    <targetPackage>eu.vital.ppi.jsonpojos</targetPackage>
                 </configuration>
                 <executions>
                     <execution>
