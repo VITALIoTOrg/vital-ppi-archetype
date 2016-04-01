@@ -123,12 +123,12 @@ public class PPI {
         iotSystem.setServiceArea("http://dbpedia.org/page/Thebestcity");
 
         // Add your IoT system sensors:
-        // sensors.add(uri.getBaseUri() + "/sensor/" + "asensorid");
-        sensors.add(uri.getBaseUri() + "/sensor/monitoring");
+        // sensors.add(uri.getBaseUri() + "sensor/" + "asensorid");
+        sensors.add(uri.getBaseUri() + "sensor/monitoring");
         iotSystem.setSensors(sensors);
 
-        services.add(uri.getBaseUri() + "/service/monitoring");
-        services.add(uri.getBaseUri() + "/service/observation");
+        services.add(uri.getBaseUri() + "service/monitoring");
+        services.add(uri.getBaseUri() + "service/observation");
         iotSystem.setServices(services);
 
         iotSystem.setSystems(null); // Unless this system has any subsystems
@@ -605,7 +605,7 @@ public class PPI {
 
                 metric = new PerformanceMetric();
                 metric.setContext("http://vital-iot.eu/contexts/measurement.jsonld");
-                metric.setId(uri.getBaseUri() + "/sensor/monitoring/observation/" + Long.toHexString(date.getTime()));
+                metric.setId(uri.getBaseUri() + "sensor/monitoring/observation/" + Long.toHexString(date.getTime()));
                 metric.setType("ssn:Observation");
 
                 SsnObservationProperty_ ssnObservationProperty_ = new SsnObservationProperty_();
@@ -625,7 +625,7 @@ public class PPI {
                 ssnObservationResult_.setSsnHasValue(ssnHasValue_);
                 metric.setSsnObservationResult(ssnObservationResult_);
 
-                metric.setSsnFeatureOfInterest(uri.getBaseUri().toString());
+                metric.setSsnFeatureOfInterest(uri.getBaseUri().toString().replaceAll("/$", ""));
                 metrics.add(metric);
 
                 try {
@@ -666,7 +666,10 @@ public class PPI {
         sensor.setName(id);
         sensor.setType("vital:MonitoringSensor");
         sensor.setDescription("Awesome monitoring sensor");
-        sensor.setId(uri.getBaseUri() + path + "/sensor/" + id);
+        if (path == null)
+            sensor.setId(uri.getBaseUri() + "sensor/" + id);
+        else
+            sensor.setId(uri.getBaseUri() + path + "/sensor/" + id);
 
         sensor.setStatus("vital:Running");
 
