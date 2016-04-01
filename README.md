@@ -35,6 +35,6 @@ Follow installation instructions of Git and Maven.
           -DarchetypeGroupId=eu.vital-iot \
           -DarchetypeArtifactId=vital-ppi-archetype \
           -DarchetypeVersion=1.0 \
-          -DgroupId=<my.groupid> \
+          -DgroupId=eu.vital.ppi \
           -DartifactId=<my-artifactId>
 
