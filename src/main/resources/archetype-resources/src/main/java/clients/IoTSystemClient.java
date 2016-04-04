@@ -1,7 +1,6 @@
 package eu.vital.ppi.clients;
 
 import eu.vital.ppi.utils.HttpCommonClient;
-import eu.vital.ppi.utils.JsonUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -10,10 +9,6 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-
-import eu.vital.ppi.jsonpojos.CityBikesNetwork;
-import eu.vital.ppi.jsonpojos.CityBikesNetworks;
 
 public class IoTSystemClient
 {
@@ -73,7 +68,7 @@ public class IoTSystemClient
     }
 
     /*
-     * In this class you must implement the methods to retrieve the needed data
+     * TODO: in this class you must implement the methods to retrieve the data
      * from the IoT system(s) and return it in appropriate objects.
      *
      * The following examples are taken from the "vital-ppi-citybikes":
@@ -131,3 +126,4 @@ public class IoTSystemClient
         }
      */
 }
+

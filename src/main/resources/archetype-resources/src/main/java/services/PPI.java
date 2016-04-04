@@ -105,7 +105,7 @@ public class PPI {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        /* Call the appropriate "client" function(s) */
+        /* TODO: Call the appropriate "client" function(s) */
         /* If you cannot get a response from the IoT system, check if you have
          * the data your need in "cache" and set status to unavailable */
 
@@ -113,7 +113,7 @@ public class PPI {
         sensors = new ArrayList<String>();
         iotSystem = new IoTSystem();
 
-        // Fill in the iotSystem properties (with data from the "client" when needed)
+        // TODO: fill in the iotSystem properties (with data from the "client" when needed)
         iotSystem.setContext("http://vital-iot.eu/contexts/system.jsonld");
         iotSystem.setId(uri.getBaseUri().toString().replaceAll("/$", ""));
         iotSystem.setType("vital:VitalSystem");
@@ -122,7 +122,7 @@ public class PPI {
         iotSystem.setOperator("http://example.com/people#john_doe");
         iotSystem.setServiceArea("http://dbpedia.org/page/Thebestcity");
 
-        // Add your IoT system sensors:
+        // TODO: add your IoT system sensors:
         // sensors.add(uri.getBaseUri() + "sensor/" + "asensorid");
         sensors.add(uri.getBaseUri() + "sensor/monitoring");
         iotSystem.setSensors(sensors);
@@ -316,7 +316,7 @@ public class PPI {
         SsnHasValue_ ssnHasValue_;
         PerformanceMetric lifecycleInformation;
 
-        // Call appropriate "client" method to check the IoT system status
+        // TODO: call appropriate "client" method to check the IoT system status
         lifecycleInformation = new PerformanceMetric();
         ssnHasValue_ = new SsnHasValue_();
         ssnHasValue_.setValue("vital:Running");
@@ -429,17 +429,17 @@ public class PPI {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        // Call the appropriate "client" method(s) and use "cache" if needed
+        // TODO: call the appropriate "client" method(s) and use "cache" if needed
 
         sensors = new ArrayList<Sensor>();
 
         if ((sensorRequest.getId().size() == 0) && (sensorRequest.getType().size() == 0)) {
-            // Add IoT system sensors
+            // TODO: add IoT system sensors
             sensors.add(createMonitoringSensor(null, uri));
         } else {
             for (String type : sensorRequest.getType()) {
                 if (type.contains("VitalSensor")) {
-                	// Add IoT system sensors
+                	// TODO: add IoT system sensors
                 }
                 else if (type.contains("MonitoringSensor")) {
                 	sensors.add(createMonitoringSensor(null, uri));
@@ -452,7 +452,7 @@ public class PPI {
                     	sensors.add(tmpSensor);
                     }
                 } else {
-                	/* Loop over the IoT system sensors and if you find the one
+                	/* TODO: loop over the IoT system sensors and if you find the one
                        corresponding to "id" add it if not already included */
                 }
             }
@@ -484,17 +484,17 @@ public class PPI {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        // Call the appropriate "client" method(s) and use "cache" if needed
+        // TODO: call the appropriate "client" method(s) and use "cache" if needed
 
         sensorsStatus = new ArrayList<SensorStatus>();
 
         if ((sensorRequest.getId().size() == 0) && (sensorRequest.getType().size() == 0)) {
-            // Add IoT system sensors status objects
+            // TODO: add IoT system sensors status objects
             sensorsStatus.add(createMonitoringStatusMeasure(null, uri));
         } else {
             for (String type : sensorRequest.getType()) {
                 if (type.contains("VitalSensor")) {
-                    // Add IoT system sensors status objects
+                    // TODO: add IoT system sensors status objects
                 }
                 else if (type.contains("MonitoringSensor")) {
                 	sensorsStatus.add(createMonitoringStatusMeasure(null, uri));
@@ -507,7 +507,7 @@ public class PPI {
                     	sensorsStatus.add(tmpSensor);
                     }
                 } else {
-                	/* Loop over the IoT system sensors and if you find the one
+                	/* TODO: loop over the IoT system sensors and if you find the one
                        corresponding to "id" add its status object if not already included */
                 }
             }
@@ -551,7 +551,7 @@ public class PPI {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        // Call the appropriate "client" method(s) and use "cache" if needed
+        // TODO: call the appropriate "client" method(s) and use "cache" if needed
 
         for (String id : observationRequest.getSensor()) {
             if (id.contains("monitoring")) {
@@ -639,9 +639,9 @@ public class PPI {
             } else {
             	Measure tmpMeasure;
             	boolean found = false;
-                // Loop over the IoT system sensors and look for the one corresponding to id
+                // TODO: loop over the IoT system sensors and look for the one corresponding to id
                 // If found construct the observation and add it to "measures"
-                // Id appropriate handle the "from" and "to" fields in the request
+                // If appropriate handle the "from" and "to" fields in the request
                 if (!found)
                 	return Response.status(Response.Status.BAD_REQUEST).build();
             }
@@ -746,7 +746,7 @@ public class PPI {
         return sensor;
     }
 
-    /* This is an example of function to construct a sensor metadata object:
+    /* This is an example of function to construct a sensor metadata object (CityBikes API):
         private Sensor createSensorFromStation(String path, Station station, UriInfo uri) throws ParseException {
             SimpleDateFormat timestampDateFormat;
             Date now, timestamp = null;
@@ -904,7 +904,7 @@ public class PPI {
         return m;
     }
 
-    /* This is an example of function to construct a sensor status object (it is actually quite generic, "station" is only to get the sensor id) :
+    /* This is an example of function to construct a sensor status object (it is actually quite generic, "station" is only to get the sensor id):
         private SensorStatus createStatusMeasureFromStation(String path, Station station, UriInfo uri) throws ParseException {
             SimpleDateFormat timestampDateFormat, printedDateFormat;
             Date now, timestamp = null;
@@ -945,7 +945,7 @@ public class PPI {
         }
     */
 
-    /* This is an example of function to construct a sensor observation object:
+    /* This is an example of function to construct a sensor observation object (CityBikes API):
         private Measure createMeasureFromStation(String path, Station station, String property, UriInfo uri) throws ParseException {
             Measure m;
             SimpleDateFormat printedDateFormat, timestampDateFormat;
@@ -1014,3 +1014,4 @@ public class PPI {
         return ((int) (value * 1000) / 10.0);
     }
 }
+

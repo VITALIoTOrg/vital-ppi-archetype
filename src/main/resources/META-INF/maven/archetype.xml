@@ -13,11 +13,9 @@
     </sources>
     <resources>
         <resource>src/main/resources/log4j2.xml</resource>
-        <resource>src/main/JsonFiles/CityBikesNetwork.json</resource>
         <resource>src/main/JsonFiles/IoTSystem.json</resource>
         <resource>src/main/JsonFiles/PerformanceMetric.json</resource>
         <resource>src/main/JsonFiles/Service.json</resource>
-        <resource>src/main/JsonFiles/CityBikesNetworks.json</resource>
         <resource>src/main/JsonFiles/Measure.json</resource>
         <resource>src/main/JsonFiles/PerformanceMetricsMetadata.json</resource>
         <resource>src/main/JsonFiles/EmptyRequest.json</resource>
