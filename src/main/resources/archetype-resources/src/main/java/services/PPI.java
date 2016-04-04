@@ -61,7 +61,6 @@ import java.util.TimeZone;
 
 @Path("")
 public class PPI {
-
     private Logger logger;
     private IoTSystemClient client;
 
