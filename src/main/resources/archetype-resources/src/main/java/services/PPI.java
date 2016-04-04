@@ -74,21 +74,21 @@ public class PPI {
     private static Date startupTime = new Date();
 
     public PPI() {
-    	TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    	
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+
         client = new IoTSystemClient();
         logger = LogManager.getLogger(PPI.class);
 
         if (cache == null) {
-        	cache = new HashMap<String, Object>();
+            cache = new HashMap<String, Object>();
         }
 
         if (startupTime == null) {
-        	startupTime = new Date();
+            startupTime = new Date();
         }
     }
 
-	@Path("/metadata")
+    @Path("/metadata")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -134,20 +134,20 @@ public class PPI {
         iotSystem.setSystems(null); // Unless this system has any subsystems
 
         try {
-			return Response.status(Response.Status.OK)
-				.entity(JsonUtils.serializeJson(iotSystem))
-				.build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		}
+            return Response.status(Response.Status.OK)
+                .entity(JsonUtils.serializeJson(iotSystem))
+                .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/system/performance")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSupportedPerformanceMetrics(@Context UriInfo uri) {
-    	PerformanceMetricsMetadata performanceMetricsMetadata;
+        PerformanceMetricsMetadata performanceMetricsMetadata;
         List<Metric> list;
         Metric metric;
 
@@ -197,13 +197,13 @@ public class PPI {
         performanceMetricsMetadata.setMetrics(list);
 
         try {
-			return Response.status(Response.Status.OK)
-				.entity(JsonUtils.serializeJson(performanceMetricsMetadata))
-				.build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		}
+            return Response.status(Response.Status.OK)
+                .entity(JsonUtils.serializeJson(performanceMetricsMetadata))
+                .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/system/performance")
@@ -220,9 +220,9 @@ public class PPI {
         String type, unit, value;
 
         try {
-        	requestedMetrics = ((MetricRequest) JsonUtils.deserializeJson(bodyRequest, MetricRequest.class)).getMetric();
+            requestedMetrics = ((MetricRequest) JsonUtils.deserializeJson(bodyRequest, MetricRequest.class)).getMetric();
         } catch (IOException e) {
-        	logger.error("[/system/performance] Error parsing request");
+            logger.error("[/system/performance] Error parsing request");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
@@ -231,44 +231,44 @@ public class PPI {
         metrics = new ArrayList<PerformanceMetric>();
         for (String m : requestedMetrics) {
             if (m.contains("UsedMem")) {
-            	type = "vital:UsedMem";
-            	unit = "qudt:Byte";
-            	value = Long.toString(runtime.totalMemory());
+                type = "vital:UsedMem";
+                unit = "qudt:Byte";
+                value = Long.toString(runtime.totalMemory());
             } else if (m.contains("AvailableMem")) {
-            	type = "vital:AvailableMem";
-            	unit = "qudt:Byte";
-            	value = Long.toString(runtime.freeMemory());
+                type = "vital:AvailableMem";
+                unit = "qudt:Byte";
+                value = Long.toString(runtime.freeMemory());
             } else if (m.contains("AvailableDisk")) {
-            	type = "vital:AvailableDisk";
-            	unit = "qudt:Byte";
-            	value = Long.toString(new File("/").getFreeSpace());
+                type = "vital:AvailableDisk";
+                unit = "qudt:Byte";
+                value = Long.toString(new File("/").getFreeSpace());
             } else if (m.contains("SysLoad")) {
-            	type = "vital:SysLoad";
-            	unit = "qudt:Percentage";
-            	try {
-					value = Double.toString(getProcessCpuLoad());
-				} catch (Exception e) {
-					e.printStackTrace();
-					return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-				}
+                type = "vital:SysLoad";
+                unit = "qudt:Percentage";
+                try {
+                    value = Double.toString(getProcessCpuLoad());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                }
             } else if (m.contains("ServedRequests")) {
-            	type = "vital:ServedRequests";
-            	unit = "qudt:Number";
-            	value = Integer.toString(StatCounter.getRequestNumber().get());
+                type = "vital:ServedRequests";
+                unit = "qudt:Number";
+                value = Integer.toString(StatCounter.getRequestNumber().get());
             } else if (m.contains("Errors")) {
-            	type = "vital:Errors";
-            	unit = "qudt:Number";
-            	value = Integer.toString(StatCounter.getErrorNumber().get());
+                type = "vital:Errors";
+                unit = "qudt:Number";
+                value = Integer.toString(StatCounter.getErrorNumber().get());
             } else if (m.contains("SysUptime")) {
-            	type = "vital:SysUptime";
-            	unit = "qudt:MilliSecond";
-            	value = Long.toString(date.getTime() - startupTime.getTime());
+                type = "vital:SysUptime";
+                unit = "qudt:MilliSecond";
+                value = Long.toString(date.getTime() - startupTime.getTime());
             } else if (m.contains("PendingRequests")) {
-            	type = "vital:PendingRequests";
-            	unit = "qudt:Number";
-            	value = Integer.toString(StatCounter.getPendingRequest() - 1);
+                type = "vital:PendingRequests";
+                unit = "qudt:Number";
+                value = Integer.toString(StatCounter.getPendingRequest() - 1);
             } else {
-            	logger.error("[/system/performance] Bad metric " + m);
+                logger.error("[/system/performance] Bad metric " + m);
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
 
@@ -299,20 +299,20 @@ public class PPI {
         }
 
         try {
-			return Response.status(Response.Status.OK)
-				.entity(JsonUtils.serializeJson(metrics))
-				.build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		}
+            return Response.status(Response.Status.OK)
+                .entity(JsonUtils.serializeJson(metrics))
+                .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/system/status")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSystemStatus(@Context UriInfo uri) {
-    	Date now;
+        Date now;
         SsnHasValue_ ssnHasValue_;
         PerformanceMetric lifecycleInformation;
 
@@ -348,13 +348,13 @@ public class PPI {
         lifecycleInformation.setSsnFeatureOfInterest(uri.getBaseUri().toString().replaceAll("/$", ""));
 
         try {
-			return Response.status(Response.Status.OK)
-				.entity(JsonUtils.serializeJson(lifecycleInformation))
-				.build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		}
+            return Response.status(Response.Status.OK)
+                .entity(JsonUtils.serializeJson(lifecycleInformation))
+                .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/service/metadata")
@@ -367,9 +367,9 @@ public class PPI {
         List<Service> services;
 
         try {
-        	serviceRequest = (IdTypeRequest) JsonUtils.deserializeJson(bodyRequest, IdTypeRequest.class);
+            serviceRequest = (IdTypeRequest) JsonUtils.deserializeJson(bodyRequest, IdTypeRequest.class);
         } catch (IOException e) {
-        	logger.error("[/service/metadata] Error parsing request");
+            logger.error("[/service/metadata] Error parsing request");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         
@@ -381,7 +381,7 @@ public class PPI {
         } else {
             for (String type : serviceRequest.getType()) {
                 if (type.contains("ObservationService")) {
-                	services.add(createObservationService(null, uri));
+                    services.add(createObservationService(null, uri));
                 }
                 else if (type.contains("MonitoringService")) {
                     services.add(createMonitoringService(null, uri));
@@ -404,13 +404,13 @@ public class PPI {
         }
 
         try {
-			return Response.status(Response.Status.OK)
-				.entity(JsonUtils.serializeJson(services))
-				.build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		}
+            return Response.status(Response.Status.OK)
+                .entity(JsonUtils.serializeJson(services))
+                .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/sensor/metadata")
@@ -423,9 +423,9 @@ public class PPI {
         List<Sensor> sensors;
 
         try {
-        	sensorRequest = (IdTypeRequest) JsonUtils.deserializeJson(bodyRequest, IdTypeRequest.class);
+            sensorRequest = (IdTypeRequest) JsonUtils.deserializeJson(bodyRequest, IdTypeRequest.class);
         } catch (IOException e) {
-        	logger.error("[/sensor/metadata] Error parsing request");
+            logger.error("[/sensor/metadata] Error parsing request");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
@@ -439,33 +439,33 @@ public class PPI {
         } else {
             for (String type : sensorRequest.getType()) {
                 if (type.contains("VitalSensor")) {
-                	// TODO: add IoT system sensors
+                    // TODO: add IoT system sensors
                 }
                 else if (type.contains("MonitoringSensor")) {
-                	sensors.add(createMonitoringSensor(null, uri));
+                    sensors.add(createMonitoringSensor(null, uri));
                 }
             }
             for (String id : sensorRequest.getId()) {
-            	if (id.contains("monitoring")) {
+                if (id.contains("monitoring")) {
                     tmpSensor = createMonitoringSensor(null, uri);
                     if (!sensors.contains(tmpSensor)) {
-                    	sensors.add(tmpSensor);
+                        sensors.add(tmpSensor);
                     }
                 } else {
-                	/* TODO: loop over the IoT system sensors and if you find the one
+                    /* TODO: loop over the IoT system sensors and if you find the one
                        corresponding to "id" add it if not already included */
                 }
             }
         }
 
         try {
-			return Response.status(Response.Status.OK)
-				.entity(JsonUtils.serializeJson(sensors))
-				.build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		}
+            return Response.status(Response.Status.OK)
+                .entity(JsonUtils.serializeJson(sensors))
+                .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/sensor/status")
@@ -473,14 +473,14 @@ public class PPI {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSensorStatus(String bodyRequest, @Context UriInfo uri) {
-    	IdTypeRequest sensorRequest;
+        IdTypeRequest sensorRequest;
         SensorStatus tmpSensor;
         List<SensorStatus> sensorsStatus;
 
         try {
-        	sensorRequest = (IdTypeRequest) JsonUtils.deserializeJson(bodyRequest, IdTypeRequest.class);
+            sensorRequest = (IdTypeRequest) JsonUtils.deserializeJson(bodyRequest, IdTypeRequest.class);
         } catch (IOException e) {
-        	logger.error("[/sensor/status] Error parsing request");
+            logger.error("[/sensor/status] Error parsing request");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
@@ -497,30 +497,30 @@ public class PPI {
                     // TODO: add IoT system sensors status objects
                 }
                 else if (type.contains("MonitoringSensor")) {
-                	sensorsStatus.add(createMonitoringStatusMeasure(null, uri));
+                    sensorsStatus.add(createMonitoringStatusMeasure(null, uri));
                 }
             }
             for (String id : sensorRequest.getId()) {
-            	if (id.contains("monitoring")) {
+                if (id.contains("monitoring")) {
                     tmpSensor = createMonitoringStatusMeasure(null, uri);
                     if (!sensorsStatus.contains(tmpSensor)) {
-                    	sensorsStatus.add(tmpSensor);
+                        sensorsStatus.add(tmpSensor);
                     }
                 } else {
-                	/* TODO: loop over the IoT system sensors and if you find the one
+                    /* TODO: loop over the IoT system sensors and if you find the one
                        corresponding to "id" add its status object if not already included */
                 }
             }
         }
 
         try {
-			return Response.status(Response.Status.OK)
-				.entity(JsonUtils.serializeJson(sensorsStatus))
-				.build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		}
+            return Response.status(Response.Status.OK)
+                .entity(JsonUtils.serializeJson(sensorsStatus))
+                .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/sensor/observation")
@@ -533,21 +533,21 @@ public class PPI {
         ArrayList<PerformanceMetric> metrics = new ArrayList<PerformanceMetric>();
 
         try {
-        	observationRequest = (ObservationRequest) JsonUtils.deserializeJson(bodyRequest, ObservationRequest.class);
-        	boolean missing = false;
-        	String errmsg = "";
+            observationRequest = (ObservationRequest) JsonUtils.deserializeJson(bodyRequest, ObservationRequest.class);
+            boolean missing = false;
+            String errmsg = "";
             if (observationRequest.getSensor().isEmpty()) {
-            	missing = true;
-            	errmsg = errmsg + "sensor";
+                missing = true;
+                errmsg = errmsg + "sensor";
             }
             if (observationRequest.getProperty() == null) {
-            	missing = true;
-            	errmsg = errmsg + " and property";
+                missing = true;
+                errmsg = errmsg + " and property";
             }
             if (missing)
-            	throw new IOException("field(s) " + errmsg + " is/are required!");
+                throw new IOException("field(s) " + errmsg + " is/are required!");
         } catch (IOException e) {
-        	logger.error("[/sensor/observation] Error parsing request");
+            logger.error("[/sensor/observation] Error parsing request");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
@@ -562,44 +562,44 @@ public class PPI {
                 SimpleDateFormat printedDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
                 String type, unit, value;
                 if (observationRequest.getProperty().contains("UsedMem")) {
-                	type = "vital:UsedMem";
-                	unit = "qudt:Byte";
-                	value = Long.toString(runtime.totalMemory());
+                    type = "vital:UsedMem";
+                    unit = "qudt:Byte";
+                    value = Long.toString(runtime.totalMemory());
                 } else if (observationRequest.getProperty().contains("AvailableMem")) {
-                	type = "vital:AvailableMem";
-                	unit = "qudt:Byte";
-                	value = Long.toString(runtime.freeMemory());
+                    type = "vital:AvailableMem";
+                    unit = "qudt:Byte";
+                    value = Long.toString(runtime.freeMemory());
                 } else if (observationRequest.getProperty().contains("AvailableDisk")) {
-                	type = "vital:AvailableDisk";
-                	unit = "qudt:Byte";
-                	value = Long.toString(new File("/").getFreeSpace());
+                    type = "vital:AvailableDisk";
+                    unit = "qudt:Byte";
+                    value = Long.toString(new File("/").getFreeSpace());
                 } else if (observationRequest.getProperty().contains("SysLoad")) {
-                	type = "vital:SysLoad";
-                	unit = "qudt:Percentage";
-                	try {
-    					value = Double.toString(getProcessCpuLoad());
-    				} catch (Exception e) {
-    					e.printStackTrace();
-    					return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-    				}
+                    type = "vital:SysLoad";
+                    unit = "qudt:Percentage";
+                    try {
+                        value = Double.toString(getProcessCpuLoad());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                    }
                 } else if (observationRequest.getProperty().contains("ServedRequests")) {
-                	type = "vital:ServedRequests";
-                	unit = "qudt:Number";
-                	value = Integer.toString(StatCounter.getRequestNumber().get());
+                    type = "vital:ServedRequests";
+                    unit = "qudt:Number";
+                    value = Integer.toString(StatCounter.getRequestNumber().get());
                 } else if (observationRequest.getProperty().contains("Errors")) {
-                	type = "vital:Errors";
-                	unit = "qudt:Number";
-                	value = Integer.toString(StatCounter.getErrorNumber().get());
+                    type = "vital:Errors";
+                    unit = "qudt:Number";
+                    value = Integer.toString(StatCounter.getErrorNumber().get());
                 } else if (observationRequest.getProperty().contains("SysUptime")) {
-                	type = "vital:SysUptime";
-                	unit = "qudt:MilliSecond";
-                	value = Long.toString(date.getTime() - startupTime.getTime());
+                    type = "vital:SysUptime";
+                    unit = "qudt:MilliSecond";
+                    value = Long.toString(date.getTime() - startupTime.getTime());
                 } else if (observationRequest.getProperty().contains("PendingRequests")) {
-                	type = "vital:PendingRequests";
-                	unit = "qudt:Number";
-                	value = Integer.toString(StatCounter.getPendingRequest() - 1);
+                    type = "vital:PendingRequests";
+                    unit = "qudt:Number";
+                    value = Integer.toString(StatCounter.getPendingRequest() - 1);
                 } else {
-                	logger.error("[/sensor/observation] Bad metric " + observationRequest.getProperty());
+                    logger.error("[/sensor/observation] Bad metric " + observationRequest.getProperty());
                     return Response.status(Response.Status.BAD_REQUEST).build();
                 }
 
@@ -629,37 +629,37 @@ public class PPI {
                 metrics.add(metric);
 
                 try {
-        			return Response.status(Response.Status.OK)
-        				.entity(JsonUtils.serializeJson(metrics))
-        				.build();
-        		} catch (IOException e) {
-        			e.printStackTrace();
-        			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        		}
+                    return Response.status(Response.Status.OK)
+                        .entity(JsonUtils.serializeJson(metrics))
+                        .build();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                }
             } else {
-            	Measure tmpMeasure;
-            	boolean found = false;
+                Measure tmpMeasure;
+                boolean found = false;
                 // TODO: loop over the IoT system sensors and look for the one corresponding to id
                 // If found construct the observation and add it to "measures"
                 // If appropriate handle the "from" and "to" fields in the request
                 if (!found)
-                	return Response.status(Response.Status.BAD_REQUEST).build();
+                    return Response.status(Response.Status.BAD_REQUEST).build();
             }
         }
 
         try {
-			return Response.status(Response.Status.OK)
-				.entity(JsonUtils.serializeJson(measures))
-				.build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		}
+            return Response.status(Response.Status.OK)
+                .entity(JsonUtils.serializeJson(measures))
+                .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     private Sensor createMonitoringSensor(String path, UriInfo uri) {
-    	String id = "monitoring";
-    	List<SsnObserf> observedProperties;
+        String id = "monitoring";
+        List<SsnObserf> observedProperties;
         Sensor sensor = new Sensor();
 
         sensor.setContext("http://vital-iot.eu/contexts/sensor.jsonld");
@@ -678,65 +678,65 @@ public class PPI {
         SsnObserf observedProperty = new SsnObserf();
         observedProperty.setType("vital:MemUsed");
         if (path == null)
-        	observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "usedMem");
+            observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "usedMem");
         else
-        	observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "usedMem");
+            observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "usedMem");
         observedProperties.add(observedProperty);
 
         observedProperty = new SsnObserf();
         observedProperty.setType("vital:MemAvailable");
         if (path == null)
-        	observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "availableMem");
+            observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "availableMem");
         else
-        	observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "availableMem");
+            observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "availableMem");
         observedProperties.add(observedProperty);
 
         observedProperty = new SsnObserf();
         observedProperty.setType("vital:DiskAvailable");
         if (path == null)
-        	observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "availableDisk");
+            observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "availableDisk");
         else
-        	observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "availableDisk");
+            observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "availableDisk");
         observedProperties.add(observedProperty);
 
         observedProperty = new SsnObserf();
         observedProperty.setType("vital:SysLoad");
         if (path == null)
-        	observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "sysLoad");
+            observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "sysLoad");
         else
-        	observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "sysLoad");
+            observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "sysLoad");
         observedProperties.add(observedProperty);
 
         observedProperty = new SsnObserf();
         observedProperty.setType("vital:ServedRequest");
         if (path == null)
-        	observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "servedRequests");
+            observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "servedRequests");
         else
-        	observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "servedRequests");
+            observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "servedRequests");
         observedProperties.add(observedProperty);
 
         observedProperty = new SsnObserf();
         observedProperty.setType("vital:Errors");
         if (path == null)
-        	observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "errors");
+            observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "errors");
         else
-        	observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "errors");
+            observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "errors");
         observedProperties.add(observedProperty);
 
         observedProperty = new SsnObserf();
         observedProperty.setType("vital:SysUpTime");
         if (path == null)
-        	observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "sysUptime");
+            observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "sysUptime");
         else
-        	observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "sysUptime");
+            observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "sysUptime");
         observedProperties.add(observedProperty);
 
         observedProperty = new SsnObserf();
         observedProperty.setType("vital:PendingRequests");
         if (path == null)
-        	observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "pendingRequests");
+            observedProperty.setId(uri.getBaseUri() + "sensor/" + id + "/" + "pendingRequests");
         else
-        	observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "pendingRequests");
+            observedProperty.setId(uri.getBaseUri() + path + "/sensor/" + id + "/" + "pendingRequests");
         observedProperties.add(observedProperty);
 
         sensor.setSsnObserves(observedProperties);
@@ -792,24 +792,24 @@ public class PPI {
     */
 
     private Service createObservationService(String path, UriInfo uri) {
-    	Operation operation;
-    	List<Operation> operations;
+        Operation operation;
+        List<Operation> operations;
         Service observationService = new Service();
         
         observationService.setContext("http://vital-iot.eu/contexts/service.jsonld");
         if (path == null)
-        	observationService.setId(uri.getBaseUri() + "service/observation");
+            observationService.setId(uri.getBaseUri() + "service/observation");
         else
-        	observationService.setId(uri.getBaseUri() + path + "/service/observation");
+            observationService.setId(uri.getBaseUri() + path + "/service/observation");
         observationService.setType("vital:ObservationService");
         operations = new ArrayList<Operation>();
         operation = new Operation();
         operation.setType("vital:GetObservations");
         operation.setHrestHasMethod("hrest:POST");
         if (path == null)
-        	operation.setHrestHasAddress(uri.getBaseUri() + "sensor/observation");
+            operation.setHrestHasAddress(uri.getBaseUri() + "sensor/observation");
         else
-        	operation.setHrestHasAddress(uri.getBaseUri() + path + "/sensor/observation");
+            operation.setHrestHasAddress(uri.getBaseUri() + path + "/sensor/observation");
         operations.add(operation);
         observationService.setOperations(operations);
 
@@ -817,48 +817,48 @@ public class PPI {
     }
 
     private Service createMonitoringService(String path, UriInfo uri) {
-    	Operation operation;
-    	List<Operation> operations;
+        Operation operation;
+        List<Operation> operations;
         Service monitoringService = new Service();
         
         monitoringService.setContext("http://vital-iot.eu/contexts/service.jsonld");
         if (path == null)
-        	monitoringService.setId(uri.getBaseUri() + "service/monitoring");
+            monitoringService.setId(uri.getBaseUri() + "service/monitoring");
         else
-        	monitoringService.setId(uri.getBaseUri() + path + "/service/monitoring");
+            monitoringService.setId(uri.getBaseUri() + path + "/service/monitoring");
         monitoringService.setType("vital:MonitoringService");
         operations = new ArrayList<Operation>();
         operation = new Operation();
         operation.setType("vital:GetSystemStatus");
         operation.setHrestHasMethod("hrest:POST");
         if (path == null)
-        	operation.setHrestHasAddress(uri.getBaseUri() + "system/status");
+            operation.setHrestHasAddress(uri.getBaseUri() + "system/status");
         else
-        	operation.setHrestHasAddress(uri.getBaseUri() + path + "/system/status");
+            operation.setHrestHasAddress(uri.getBaseUri() + path + "/system/status");
         operations.add(operation);
         operation = new Operation();
         operation.setType("vital:GetSensorStatus");
         operation.setHrestHasMethod("hrest:POST");
         if (path == null)
-        	operation.setHrestHasAddress(uri.getBaseUri() + "sensor/status");
+            operation.setHrestHasAddress(uri.getBaseUri() + "sensor/status");
         else
-        	operation.setHrestHasAddress(uri.getBaseUri() + path + "/sensor/status");
+            operation.setHrestHasAddress(uri.getBaseUri() + path + "/sensor/status");
         operations.add(operation);
         operation = new Operation();
         operation.setType("vital:GetSupportedPerformanceMetrics");
         operation.setHrestHasMethod("hrest:GET");
         if (path == null)
-        	operation.setHrestHasAddress(uri.getBaseUri() + "system/performance");
+            operation.setHrestHasAddress(uri.getBaseUri() + "system/performance");
         else
-        	operation.setHrestHasAddress(uri.getBaseUri() + path + "/system/performance");
+            operation.setHrestHasAddress(uri.getBaseUri() + path + "/system/performance");
         operations.add(operation);
         operation = new Operation();
         operation.setType("vital:GetPerformanceMetrics");
         operation.setHrestHasMethod("hrest:POST");
         if (path == null)
-        	operation.setHrestHasAddress(uri.getBaseUri() + "system/performance");
+            operation.setHrestHasAddress(uri.getBaseUri() + "system/performance");
         else
-        	operation.setHrestHasAddress(uri.getBaseUri() + path + "/system/performance");
+            operation.setHrestHasAddress(uri.getBaseUri() + path + "/system/performance");
         operations.add(operation);
         monitoringService.setOperations(operations);
 
@@ -866,8 +866,8 @@ public class PPI {
     }
 
     private SensorStatus createMonitoringStatusMeasure(String path, UriInfo uri) {
-    	SimpleDateFormat printedDateFormat;
-    	Date now;
+        SimpleDateFormat printedDateFormat;
+        Date now;
         SensorStatus m = new SensorStatus();
 
         printedDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
@@ -875,9 +875,9 @@ public class PPI {
 
         m.setContext("http://vital-iot.eu/contexts/measurement.jsonld");
         if (path == null)
-        	m.setId(uri.getBaseUri() + "sensor/monitoring/observation/" + Long.toHexString(now.getTime()));
+            m.setId(uri.getBaseUri() + "sensor/monitoring/observation/" + Long.toHexString(now.getTime()));
         else
-        	m.setId(uri.getBaseUri() + path + "/sensor/monitoring/observation/" + Long.toHexString(now.getTime()));
+            m.setId(uri.getBaseUri() + path + "/sensor/monitoring/observation/" + Long.toHexString(now.getTime()));
         m.setType("ssn:Observation");
 
         SsnObservationProperty__ ssnObservationProperty = new SsnObservationProperty__();
@@ -885,11 +885,11 @@ public class PPI {
         m.setSsnObservationProperty(ssnObservationProperty);
 
         SsnObservationResultTime__ ssnObservationResultTime = new SsnObservationResultTime__();
-    	ssnObservationResultTime.setTimeInXSDDateTime(printedDateFormat.format(now));
-    	if (path == null)
-    		m.setAdditionalProperty("ssn:featureOfInterest", uri.getBaseUri() + "sensor/monitoring");
-    	else
-    		m.setAdditionalProperty("ssn:featureOfInterest", uri.getBaseUri() + path + "/sensor/monitoring");
+        ssnObservationResultTime.setTimeInXSDDateTime(printedDateFormat.format(now));
+        if (path == null)
+            m.setAdditionalProperty("ssn:featureOfInterest", uri.getBaseUri() + "sensor/monitoring");
+        else
+            m.setAdditionalProperty("ssn:featureOfInterest", uri.getBaseUri() + path + "/sensor/monitoring");
         m.setSsnObservationResultTime(ssnObservationResultTime);
 
         SsnObservationResult__ ssnObservationResult = new SsnObservationResult__();
@@ -897,7 +897,7 @@ public class PPI {
         SsnHasValue__ ssnHasValue = new SsnHasValue__();
         ssnHasValue.setType("ssn:ObservationValue");
 
-    	ssnHasValue.setValue("vital:Running");
+        ssnHasValue.setValue("vital:Running");
         ssnObservationResult.setSsnHasValue(ssnHasValue);
         m.setSsnObservationResult(ssnObservationResult);
 
@@ -1003,13 +1003,13 @@ public class PPI {
         AttributeList list = mbs.getAttributes(name, new String[] { "ProcessCpuLoad" });
 
         if (list.isEmpty())
-        	return Double.NaN;
+            return Double.NaN;
 
         Attribute att = (Attribute) list.get(0);
         Double value = (Double) att.getValue();
 
         if (value == -1.0)
-        	return Double.NaN;
+            return Double.NaN;
 
         return ((int) (value * 1000) / 10.0);
     }

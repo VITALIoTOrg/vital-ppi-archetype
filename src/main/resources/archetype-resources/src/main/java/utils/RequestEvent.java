@@ -19,10 +19,10 @@ public class RequestEvent implements ContainerRequestFilter {
 
     private Logger logger = LogManager.getLogger(RequestEvent.class);
 
-	@Override
-	public void filter(ContainerRequestContext arg0) throws IOException {
-		logger.info("Request " + StatCounter.getRequestNumber().addAndGet(1) + " started [" + arg0.getUriInfo().getPath() + "].");
+    @Override
+    public void filter(ContainerRequestContext arg0) throws IOException {
+        logger.info("Request " + StatCounter.getRequestNumber().addAndGet(1) + " started [" + arg0.getUriInfo().getPath() + "].");
         EventHelper eventHelper = new EventHelper(StatCounter.getRequestNumber().addAndGet(1), arg0.getUriInfo().getPath());
-		StatCounter.addEventHelper(eventHelper);
-	}
+        StatCounter.addEventHelper(eventHelper);
+    }
 }

@@ -10,8 +10,8 @@ public class ThrowableExceptionMapper implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse(Exception e) {
-    	e.printStackTrace();
-    	StatCounter.incrementErrorNumber();
-    	return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        e.printStackTrace();
+        StatCounter.incrementErrorNumber();
+        return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
     }
 }

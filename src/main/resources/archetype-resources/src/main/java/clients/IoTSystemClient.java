@@ -20,51 +20,51 @@ public class IoTSystemClient
 
     // TODO: make it generic, support other HTTP methods
     private String performRequest(URI uri) throws ClientProtocolException, IOException {
-    	String response = null;
-    	int code;
+        String response = null;
+        int code;
 
-    	HttpGet get = new HttpGet(uri);
-    	get.setConfig(RequestConfig.custom().setConnectionRequestTimeout(3000).setConnectTimeout(3000).setSocketTimeout(10000).build());
+        HttpGet get = new HttpGet(uri);
+        get.setConfig(RequestConfig.custom().setConnectionRequestTimeout(3000).setConnectTimeout(3000).setSocketTimeout(10000).build());
 
         CloseableHttpResponse resp;
         try {
             resp = httpCC.httpc.execute(get);
             code = resp.getStatusLine().getStatusCode();
             if(code >= 200 && code <= 299) {
-            	response = EntityUtils.toString(resp.getEntity());
+                response = EntityUtils.toString(resp.getEntity());
             }
             resp.close();
         } catch (IOException e) {
             try {
-            	try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-            	get.setConfig(RequestConfig.custom().setConnectionRequestTimeout(7000).setConnectTimeout(7000).setSocketTimeout(20000).build());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                get.setConfig(RequestConfig.custom().setConnectionRequestTimeout(7000).setConnectTimeout(7000).setSocketTimeout(20000).build());
                 resp = httpCC.httpc.execute(get);
                 code = resp.getStatusLine().getStatusCode();
                 if(code >= 200 && code <= 299) {
-                	response = EntityUtils.toString(resp.getEntity());
+                    response = EntityUtils.toString(resp.getEntity());
                 }
                 resp.close();
             } catch (IOException ea) {
-            	try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-            	get.setConfig(RequestConfig.custom().setConnectionRequestTimeout(12000).setConnectTimeout(12000).setSocketTimeout(1800000).build());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                get.setConfig(RequestConfig.custom().setConnectionRequestTimeout(12000).setConnectTimeout(12000).setSocketTimeout(1800000).build());
                 resp = httpCC.httpc.execute(get);
                 code = resp.getStatusLine().getStatusCode();
                 if(code >= 200 && code <= 299) {
-                	response = EntityUtils.toString(resp.getEntity());
+                    response = EntityUtils.toString(resp.getEntity());
                 }
                 resp.close();
             }
         }
 
-    	return response;
+        return response;
     }
 
     /*

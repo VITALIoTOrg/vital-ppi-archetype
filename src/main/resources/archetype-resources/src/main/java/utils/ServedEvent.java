@@ -22,17 +22,17 @@ public class ServedEvent implements ContainerResponseFilter {
 
     private Logger logger = LogManager.getLogger(ServedEvent.class);
 
-	@Override
-	public void filter(ContainerRequestContext arg0, ContainerResponseContext arg1) throws IOException {
-		requestCount++;
-		StatCounter.setRequestedNumber(requestCount);
-		if(arg1.getStatus() >= 200 && arg1.getStatus() < 300) {
-	        logger.info("Request " + requestCount + " served.");
-		}
-		else {
-			logger.error("Request " + requestCount + " failed!");
-		}
+    @Override
+    public void filter(ContainerRequestContext arg0, ContainerResponseContext arg1) throws IOException {
+        requestCount++;
+        StatCounter.setRequestedNumber(requestCount);
+        if(arg1.getStatus() >= 200 && arg1.getStatus() < 300) {
+            logger.info("Request " + requestCount + " served.");
+        }
+        else {
+            logger.error("Request " + requestCount + " failed!");
+        }
         EventHelper eventHelperF = new EventHelper(requestCount, arg0.getUriInfo().getPath());
         StatCounter.deleteEventHelper(eventHelperF);
-	}
+    }
 }
