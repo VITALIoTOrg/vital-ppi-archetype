@@ -10,32 +10,21 @@
     <description>VITAL PPI for my awesome IoT system</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.bui1.sourceEncoding>UTF-8</project.bui1.sourceEncoding>
+        <version.compiler.plugin>3.5.1</version.compiler.plugin>
 
-        <version.jboss.bom>9.0.0.Beta2</version.jboss.bom> <!-- Only the beta version available -->
-        <version.war.plugin>2.6</version.war.plugin>
-
+        <!-- Wildfly Plugins -->
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+        <!-- Java Version -->
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.wildfly.bom</groupId>
-                <artifactId>jboss-javaee-7.0-with-resteasy</artifactId>
-                <version>${version.jboss.bom}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.6.4</version>
+            <version>2.7.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -45,7 +34,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.1</version>
+            <version>4.5.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -60,32 +49,32 @@
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
-            <scope>provided</scope>
+            <version>2.0-EDR1</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.2_spec</artifactId>
-            <scope>provided</scope>
+            <version>1.0.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>jaxrs-api</artifactId>
-            <scope>provided</scope>
+            <version>3.0.12.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.2_spec</artifactId>
-            <scope>provided</scope>
+            <version>1.0.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.faces</groupId>
             <artifactId>jboss-jsf-api_2.2_spec</artifactId>
-            <scope>provided</scope>
+            <version>2.2.13</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <scope>provided</scope>
+            <version>1.1.0.Final</version>
         </dependency>
     </dependencies>
 
@@ -116,18 +105,22 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin> 
+            </plugin>
             <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${version.war.plugin}</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.compiler.plugin}</version>
                 <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.1.0.Alpha7</version>
+                <version>${version.wildfly.maven.plugin}</version>
+                <configuration>
+                    <filename>${project.build.finalName}.war</filename>
+                </configuration>
             </plugin>
         </plugins>
     </build>
