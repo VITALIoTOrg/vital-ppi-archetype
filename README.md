@@ -14,7 +14,7 @@ For this project you need:
 
 Follow installation instructions of Git and Maven.
 
-## Configure, Build and Deploy the CityBikes PPI
+## Configure, Build and Deploy the PPI archetype
 
 1. Checkout the code from the repository:
 
